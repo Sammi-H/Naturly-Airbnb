@@ -1,0 +1,39 @@
+"use client";
+import { useEffect, useState } from "react";
+import { ListingsDisplay } from "../listings/page";
+
+interface Listing {
+  _id: string;
+  title: string;
+  destination?: string;
+  price?: number;
+  pricePerPerson?: number;
+  category: "accommodation" | "experience";
+  imagePath?: string;
+  petfriendly?: boolean;
+  image?: string[];
+}
+
+export default function UpplevelsePage() {
+  const [listings, setListings] = useState<Listing[]>([]);
+
+  useEffect(() => {
+    async function fetchListings() {
+      try {
+        const res = await fetch("/api/listings"); // din datakälla
+        const data: Listing[] = await res.json();
+        const experiences = data.filter((l) => l.category === "experience");
+        setListings(experiences);
+      } catch (err) {
+        console.error("Error fetching listings:", err);
+      }
+    }
+    fetchListings();
+  }, []);
+
+  return listings.length > 0 ? (
+    <ListingsDisplay results={listings} />
+  ) : (
+    <p style={{ padding: "16px" }}>Inga upplevelser hittades</p>
+  );
+}

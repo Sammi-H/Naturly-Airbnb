@@ -1,0 +1,107 @@
+/* Container för alla kort */
+.listingsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  padding: 8px;
+  direction: ltr;
+  grid-auto-flow: row;
+}
+
+/* Varje kort */
+.card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Bildcontainer */
+.cardImage {
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Själva bilden */
+.cardImgTag {
+  width: 100%;
+  height: auto; /* behåll proportion */
+  object-fit: cover;
+  display: block;
+}
+
+/* Favoritknapp (hjärta) */
+.favoriteButton {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* Hundikon */
+.dogIcon {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 18px;
+}
+
+/* Text under bilden */
+.cardInfo {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Rad med namn och hundikon */
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+/* Titel */
+.title {
+  font-size: 14px;
+}
+
+/* Destination */
+.destination {
+  font-size: 13px;
+  color: #555;
+}
+
+/* Prisrad */
+.price {
+  font-size: 13px;
+  color: #555;
+}
+
+/* Mobilanpassning */
+@media (max-width: 480px) {
+  .listingsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    direction: ltr; 
+  }
+  .cardImage {
+    height: auto;
+  }
+  .favoriteButton {
+    font-size: 18px;
+  }
+  .dogIcon {
+    font-size: 16px;
+  }
+}

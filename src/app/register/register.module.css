@@ -1,0 +1,64 @@
+.registerWrapper {
+    display: flex;
+    width: 100%;
+}
+
+.registerContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+}
+
+.userIcon {
+    font-size: 4em;
+    background-color: rgb(5, 74, 5);
+    color: white;
+    border-radius: 50%;
+    padding: 30px;
+}
+
+.label {
+    width: 400px;
+    max-width: 600px;
+    margin-top: 1em;
+    font-family: "Open Sans", sans-serif;
+}
+
+.input {
+    margin-top: 0.2em;
+    width: 400px;
+    max-width: 600px;
+    padding: 10px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2em;
+    gap: 2em;
+}
+
+.register {
+    background: #ecf39e;
+    padding: 20px 100px;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.input,
+.input:-webkit-autofill {
+  background-color: #e6f7ff !important; 
+  -webkit-box-shadow: 0 0 0px 1000px #e6f7ff inset;
+  box-shadow: 0 0 0px 1000px #e6f7ff inset;
+  -webkit-text-fill-color: black !important;
+}
+
+

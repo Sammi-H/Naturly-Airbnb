@@ -1,0 +1,146 @@
+.wrapper {
+  padding: 16px;
+  margin-top: 1em;
+  direction: ltr;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mainBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 12px;
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mainBlock:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.title {
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.description,
+.location,
+.price {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.cardImgTag,
+.mapImg {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+  transition: transform 0.3s;
+}
+
+.cardImgTag:hover,
+.mapImg:hover {
+  transform: scale(1.02);
+}
+
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  font-size: 12px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.buttons button {
+  font-size: 18px;
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.buttons button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.imageCounter {
+  font-size: 1.4em;
+}
+
+.imagesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+  .reserve{
+    background: #ecf39e;
+    padding: 20px 100px; 
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-top: 1em;
+  
+}
+
+@media (max-width: 480px) {
+  .mainBlock {
+    padding: 12px;
+  }
+
+  .title {
+    font-size: 1.4em;
+  }
+
+  .description,
+  .location,
+  .price {
+    font-size: 13px;
+  }
+
+  .cardImgTag,
+  .mapImg {
+    height: 150px;
+  }
+
+  .imagesGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+
+}
