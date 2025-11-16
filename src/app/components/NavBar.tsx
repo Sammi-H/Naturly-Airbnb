@@ -1,19 +1,19 @@
 "use client";
+
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-
-interface NavLink {
-  name: string;
-  href: string;
-}
+import { useRouter } from "next/navigation";
+import { useBooking } from "../context/BookingContext";
 
 interface NavBarProps {
-  resetFilter?: () => void; 
+  resetFilter?: () => void;
 }
 
 export default function NavBar({ resetFilter }: NavBarProps) {
   const [open, setOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
+  const { isLoggedIn, setIsLoggedIn } = useBooking();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -25,60 +25,83 @@ export default function NavBar({ resetFilter }: NavBarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const mainLinks: NavLink[] = [
+  const mainLinks = [
     { name: "Boende", href: "/boende" },
     { name: "Upplevelse", href: "/upplevelse" },
+    
   ];
 
-  const menuLinks: NavLink[] = [
+  const menuLinks = [
     { name: "Logga in", href: "/login" },
     { name: "Favoriter", href: "/favoriter" },
   ];
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    router.push("/");
+  };
+
   return (
     <nav className="navbar">
       <div className="topbar">
-        <div>
-          <Link href="/">
-            <h1
-              className="league-spartan-bold"
-              style={{ cursor: "pointer" }}
-              onClick={() => resetFilter && resetFilter()} 
-            >
-              Naturly
-            </h1>
-          </Link>
-        </div>
 
-        <div>
+        {/* LOGO */}
+        <Link href="/" onClick={() => resetFilter && resetFilter()}>
+          <h1 className="league-spartan-bold logo" style={{ cursor: "pointer" }}>
+            Naturly
+          </h1>
+        </Link>
+
+        {/* TOP LINKS (desktop + tablet) */}
+        <div className="nav-links">
           {mainLinks.map((link) => (
-            <a key={link.href} href={link.href} className="open-sans">
+            <Link
+              key={link.href}
+              href={link.href}
+              className="nav-link open-sans"
+            >
               {link.name}
-            </a>
+            </Link>
           ))}
         </div>
 
-        <div ref={menuRef}>
+        {/* HAMBURGER MENU */}
+        <div ref={menuRef} className="menu-container">
           <button onClick={() => setOpen(!open)} className="hamburger">
             ☰
           </button>
+
           {open && (
             <div className="dropdown-login">
               <ul>
                 {menuLinks.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href} className="open-sans dropdown-link">
+                    <Link href={link.href} className="open-sans dropdown-link">
                       {link.name === "Logga in" && <span className="icon">👤 </span>}
                       {link.name === "Favoriter" && <span className="icon">❤️ </span>}
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
+
+                {isLoggedIn && (
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="open-sans dropdown-link logout-btn"
+                      style={{ background: "none", border: "none", cursor: "pointer" }}
+                    >
+                      <span className="icon">🚪 </span> Logga ut
+                    </button>
+                  </li>
+                )}
               </ul>
             </div>
           )}
         </div>
+
       </div>
+
       <div className="bottombar"></div>
     </nav>
   );

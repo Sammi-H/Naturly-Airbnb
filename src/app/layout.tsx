@@ -69,15 +69,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <FavoritesContextProvider>
-          <FiltersProvider>
-            <BookingProvider>
-              <NavBar resetFilter={resetFilter} />
-              {children}
-              <Footer />
-            </BookingProvider>
-          </FiltersProvider>
-        </FavoritesContextProvider>
+        <div className="pageWrapper">
+          <FavoritesContextProvider>
+            <FiltersProvider>
+              <BookingProvider>
+                <NavBar resetFilter={resetFilter} />
+                <main>{children}</main>
+                <Footer />
+              </BookingProvider>
+            </FiltersProvider>
+          </FavoritesContextProvider>
+        </div>
       </body>
     </html>
   );

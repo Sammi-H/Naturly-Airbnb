@@ -18,25 +18,27 @@ interface BookingState {
     start: string;
     end: string;
   };
-  setBooking: (data: Partial<Omit<BookingState, "setBooking">>) => void;
+  isLoggedIn: boolean;
+  setBooking: (data: Partial<Omit<BookingState, "setBooking" | "isLoggedIn" | "setIsLoggedIn">>) => void;
+  setIsLoggedIn: (value: boolean) => void;
 }
 
 const BookingContext = createContext<BookingState | undefined>(undefined);
 
 export const BookingProvider = ({ children }: { children: ReactNode }) => {
-  // Initiera med samma struktur som BookingState
-  const [state, setState] = useState<Omit<BookingState, "setBooking">>({
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [state, setState] = useState<Omit<BookingState, "setBooking" | "isLoggedIn" | "setIsLoggedIn">>({
     listing: undefined,
     guests: { adults: 0, children: 0 },
     dates: { start: "", end: "" },
   });
 
-  const setBooking = (data: Partial<Omit<BookingState, "setBooking">>) => {
+  const setBooking = (data: Partial<Omit<BookingState, "setBooking" | "isLoggedIn" | "setIsLoggedIn">>) => {
     setState((prev) => ({ ...prev, ...data }));
   };
 
   return (
-    <BookingContext.Provider value={{ ...state, setBooking }}>
+    <BookingContext.Provider value={{ ...state, setBooking, isLoggedIn, setIsLoggedIn }}>
       {children}
     </BookingContext.Provider>
   );

@@ -54,7 +54,7 @@ ul {
 
 .dropdown-login{
   position: absolute;
-  top: 6%;
+  top: 8%;
   right: 0;
   background: rgb(3, 55, 3);
   border: 1px solid #ccc;
@@ -236,7 +236,50 @@ ul {
 }
 
 
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
+.modalContent {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.close {
+  background: #ecf39e;
+  padding: 20px 40px; 
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: green;
+  font-weight: bold;
+}
+
+.pageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
 
 
 @media (min-width: 200px) and (max-width: 2000px) {
@@ -338,9 +381,5 @@ ul {
   gap: 1px;
   z-index: 999;
 }
-
-
-
-
 
 }

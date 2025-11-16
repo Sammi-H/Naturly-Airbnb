@@ -41,6 +41,14 @@ a {
   gap: 40px;
 }
 
+
+@media (max-width: 575px) {
+  .nav-links a[href="/favoriter"] {
+    display: none !important;
+  }
+}
+
+
 .bottombar {
   display: flex;
   align-items: center;
@@ -54,5 +62,3 @@ a {
   outline: none;
   font-size: 2em;
 }
-
-/* Lägg till övriga stilar från din gamla media query här, t.ex. dropdown, searchbar etc. */

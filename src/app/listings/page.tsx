@@ -29,7 +29,7 @@ interface Listing {
 
 type ListingsDisplayProps = {
   results: Listing[];
-  filteredDestination?: string; // ✅ Filtrering baserat på vald destination
+  filteredDestination?: string; 
 };
 
 export function ListingsDisplay({
@@ -85,54 +85,46 @@ export function ListingsDisplay({
   };
 
   return (
-    <FavoritesContextProvider>
+   <FavoritesContextProvider>
+  {boenden.length > 0 && (
+    <>
+      <br />
+      <h2 className={styles.heading}>Upptäck boenden</h2>
       <div className={styles.listingsGrid}>
-        {boenden.length > 0 && (
-          <>
-            <h2>Upptäck boenden</h2>
-            <br />
-            {boenden.map((l) => (
-              <ListingCard
-                key={l._id}
-                listing={l}
-                imagePath={getImagePath(l)}
-              />
-            ))}
-          </>
-        )}
-
-        <br />
-
-        {dogFriendly.length > 0 && (
-          <>
-            <h2>Hundvänliga boenden</h2>
-            <br />
-            {dogFriendly.map((l) => (
-              <ListingCard
-                key={l._id}
-                listing={l}
-                imagePath={getImagePath(l)}
-                showDogIcon
-              />
-            ))}
-          </>
-        )}
-
-        {experiences.length > 0 && (
-          <>
-            <h2>Upptäck upplevelser</h2>
-            <br />
-            {experiences.map((l) => (
-              <ExperienceCard
-                key={l._id}
-                listing={l}
-                imagePath={getImagePath(l)}
-              />
-            ))}
-          </>
-        )}
+        {boenden.map((l) => (
+          <ListingCard key={l._id} listing={l} imagePath={getImagePath(l)} />
+        ))}
       </div>
-    </FavoritesContextProvider>
+    </>
+  )}
+
+  
+
+  {dogFriendly.length > 0 && (
+    <>
+      <br />
+      <h2 className={styles.heading}>Hundvänliga boenden</h2>
+      <div className={styles.listingsGrid}>
+        {dogFriendly.map((l) => (
+          <ListingCard key={l._id} listing={l} imagePath={getImagePath(l)} showDogIcon />
+        ))}
+      </div>
+    </>
+  )}
+
+  {experiences.length > 0 && (
+    <>
+      <br />
+      <h2 className={styles.heading}>Upptäck upplevelser</h2>
+      <div className={styles.listingsGrid}>
+        {experiences.map((l) => (
+          <ExperienceCard key={l._id} listing={l} imagePath={getImagePath(l)} />
+        ))}
+      </div>
+    </>
+  )}
+</FavoritesContextProvider>
+
   );
 }
 

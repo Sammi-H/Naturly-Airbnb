@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useContext } from "react";
-import { FiltersContext } from "../layout"; // samma fil som FiltersContext
+import { FiltersContext } from "@/app/layout";
+
 
 // ----- Listings & Tab -----
 interface Listings {

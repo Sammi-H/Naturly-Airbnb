@@ -4,15 +4,14 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import styles from "./login.module.css";
-
-
-
+import { useBooking } from "../context/BookingContext"; // importera context
 
 export default function Login() {
   const [username, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const router = useRouter();
+  const { setIsLoggedIn } = useBooking(); // hämta setIsLoggedIn
 
   const handleLogin = async () => {
     try {
@@ -27,12 +26,12 @@ export default function Login() {
 
       const data = await response.json();
 
-      
       if (!response.ok) {
         setError(data.error || "Något gick fel");
         return;
       }
 
+      setIsLoggedIn(true); // sätt användaren som inloggad
       router.push("/");
 
     } catch (error) {
@@ -45,38 +44,44 @@ export default function Login() {
     router.push("/register");
   };
 
-  return(
+  return (
     <div className={styles.loginWrapper}>
       <div className={styles.loginContent}>
-          <FontAwesomeIcon icon={faUser} className={styles.userIcon} />
+        <FontAwesomeIcon icon={faUser} className={styles.userIcon} />
 
         <label className={styles.label}>Username:</label>
-        <input className={styles.input}
-        type="text"
-        value={username}
-        placeholder="Användarnamn"
-        onChange={(e) => setUserName(e.target.value)}
-        required
+        <input
+          className={styles.input}
+          type="text"
+          value={username}
+          placeholder="Användarnamn"
+          onChange={(e) => setUserName(e.target.value)}
+          required
         />
 
         <label className={styles.label}>Password:</label>
-        <input className={styles.input}
-        type="password"
-        value={password}
-        placeholder="Lösenord"
-        onChange={(e) => setPassword(e.target.value)}
-        required
+        <input
+          className={styles.input}
+          type="password"
+          value={password}
+          placeholder="Lösenord"
+          onChange={(e) => setPassword(e.target.value)}
+          required
         />
-        
-        <br />
-        
-       {error && <p style={{color: "red"}}>{error}</p>}
 
-       <div className={styles.buttons}> 
-       <button className={styles.loginBtn}onClick={handleLogin}>Logga in</button>
-       <button className={styles.registerBtn} onClick={handleRegister}>Registrera</button>
-       </div>
+        <br />
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        <div className={styles.buttons}>
+          <button className={styles.loginBtn} onClick={handleLogin}>
+            Logga in
+          </button>
+          <button className={styles.registerBtn} onClick={handleRegister}>
+            Registrera
+          </button>
+        </div>
       </div>
     </div>
-  )
+  );
 }

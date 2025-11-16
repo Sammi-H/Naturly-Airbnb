@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { FiltersProvider } from "../app/layout";
 import SearchBar from "./components/SearchBar";
 import { ListingsDisplay } from "./listings/page";
-import LoginModal from "./components/modal";
+import LoginModal from "./components/Modal";
 
 
 export default function App() {
