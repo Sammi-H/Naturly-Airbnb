@@ -33,6 +33,7 @@ export default function NavBar({ resetFilter }: NavBarProps) {
   const menuLinks = [
     { name: "Logga in", href: "/login", icon: "👤" },
     { name: "Favoriter", href: "/favoriter", icon: "❤️" },
+    ...(isLoggedIn ? [{ name: "Mina bokningar", href: "/bookingme", icon: "📖" }] : []),
   ];
 
   const handleLogout = () => {
@@ -45,21 +46,14 @@ export default function NavBar({ resetFilter }: NavBarProps) {
     <nav className="navbar">
       <div className="topbar">
         <Link href="/" onClick={() => resetFilter && resetFilter()}>
-          <h1
-            className="league-spartan-bold logo"
-            style={{ cursor: "pointer" }}
-          >
+          <h1 className="league-spartan-bold logo" style={{ cursor: "pointer" }}>
             Naturly
           </h1>
         </Link>
 
         <div className="nav-links">
           {mainLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="nav-link open-sans"
-            >
+            <Link key={link.href} href={link.href} className="nav-link open-sans">
               {link.name}
             </Link>
           ))}
