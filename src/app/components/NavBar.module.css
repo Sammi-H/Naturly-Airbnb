@@ -41,13 +41,22 @@ a {
   gap: 40px;
 }
 
+.nav-links a {
+  color: white;
+  text-decoration: none;
+
+}
+
+
+.icon {
+    cursor: pointer;
+}
 
 @media (max-width: 575px) {
   .nav-links a[href="/favoriter"] {
     display: none !important;
   }
 }
-
 
 .bottombar {
   display: flex;
@@ -61,4 +70,34 @@ a {
   border: none;
   outline: none;
   font-size: 2em;
+}
+
+.dropdown-login ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+.dropdown-link:hover {
+  opacity: 0.8;
+}
+
+.logout-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
 }

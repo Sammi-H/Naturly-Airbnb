@@ -28,31 +28,31 @@ export default function NavBar({ resetFilter }: NavBarProps) {
   const mainLinks = [
     { name: "Boende", href: "/boende" },
     { name: "Upplevelse", href: "/upplevelse" },
-    
   ];
 
   const menuLinks = [
-    { name: "Logga in", href: "/login" },
-    { name: "Favoriter", href: "/favoriter" },
+    { name: "Logga in", href: "/login", icon: "👤" },
+    { name: "Favoriter", href: "/favoriter", icon: "❤️" },
   ];
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     router.push("/");
   };
 
   return (
     <nav className="navbar">
       <div className="topbar">
-
-        {/* LOGO */}
         <Link href="/" onClick={() => resetFilter && resetFilter()}>
-          <h1 className="league-spartan-bold logo" style={{ cursor: "pointer" }}>
+          <h1
+            className="league-spartan-bold logo"
+            style={{ cursor: "pointer" }}
+          >
             Naturly
           </h1>
         </Link>
 
-        {/* TOP LINKS (desktop + tablet) */}
         <div className="nav-links">
           {mainLinks.map((link) => (
             <Link
@@ -65,7 +65,6 @@ export default function NavBar({ resetFilter }: NavBarProps) {
           ))}
         </div>
 
-        {/* HAMBURGER MENU */}
         <div ref={menuRef} className="menu-container">
           <button onClick={() => setOpen(!open)} className="hamburger">
             ☰
@@ -77,8 +76,7 @@ export default function NavBar({ resetFilter }: NavBarProps) {
                 {menuLinks.map((link) => (
                   <li key={link.href}>
                     <Link href={link.href} className="open-sans dropdown-link">
-                      {link.name === "Logga in" && <span className="icon">👤 </span>}
-                      {link.name === "Favoriter" && <span className="icon">❤️ </span>}
+                      <span className="icon">{link.icon} </span>
                       {link.name}
                     </Link>
                   </li>
@@ -86,20 +84,19 @@ export default function NavBar({ resetFilter }: NavBarProps) {
 
                 {isLoggedIn && (
                   <li>
-                    <button
+                    <Link
+                      href="/"
                       onClick={handleLogout}
-                      className="open-sans dropdown-link logout-btn"
-                      style={{ background: "none", border: "none", cursor: "pointer" }}
+                      className="open-sans dropdown-link logout-link"
                     >
                       <span className="icon">🚪 </span> Logga ut
-                    </button>
+                    </Link>
                   </li>
                 )}
               </ul>
             </div>
           )}
         </div>
-
       </div>
 
       <div className="bottombar"></div>

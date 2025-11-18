@@ -1,23 +1,28 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import styles from "./reserve.module.css";
 import { useBooking } from "../context/BookingContext";
 import Modal from "../components/Modal";
 
+type Guests = {
+  adults: number;
+  children: number;
+  pets: number;
+};
+
+type Dates = {
+  start: string;
+  end: string;
+};
+
 export default function BookingOverview() {
   const searchParams = useSearchParams();
   const listingId = searchParams.get("listingId");
   const router = useRouter();
 
-  const {
-    listing: bookedListing,
-    guests,
-    dates,
-    isLoggedIn,
-    setBooking,
-  } = useBooking();
+  const { listing: bookedListing, guests, dates, isLoggedIn, setBooking } =
+    useBooking();
   const { adults = 0, children = 0, pets = 0 } = guests;
   const { start = "", end = "" } = dates;
 
@@ -25,11 +30,14 @@ export default function BookingOverview() {
   const [nights, setNights] = useState(0);
   const [selectedPayment, setSelectedPayment] = useState("");
 
-  // States för inline ändring
   const [editingDates, setEditingDates] = useState(false);
   const [editingGuests, setEditingGuests] = useState(false);
-  const [tempDates, setTempDates] = useState({ start, end });
-  const [tempGuests, setTempGuests] = useState({ adults, children, pets });
+  const [tempDates, setTempDates] = useState<Dates>({ start, end });
+  const [tempGuests, setTempGuests] = useState<Guests>({
+    adults,
+    children,
+    pets,
+  });
 
   const [modalConfig, setModalConfig] = useState<{
     isOpen: boolean;
@@ -54,10 +62,11 @@ export default function BookingOverview() {
 
   useEffect(() => {
     if (start && end) {
-      const diff = Math.ceil(
-        (new Date(end).getTime() - new Date(start).getTime()) /
-          (1000 * 60 * 60 * 24)
-      );
+      const diff =
+        Math.ceil(
+          (new Date(end).getTime() - new Date(start).getTime()) /
+            (1000 * 60 * 60 * 24)
+        ) || 0;
       setNights(diff > 0 ? diff : 0);
       setTempDates({ start, end });
     }
@@ -71,22 +80,42 @@ export default function BookingOverview() {
 
   const totalPrice = (listing.price || 0) * nights;
 
-  const handleBooking = () => {
-    if (!isLoggedIn) {
-      return setModalConfig({
-        isOpen: true,
-        title: "Du måste logga in först",
-        onClose: () => setModalConfig({ isOpen: false, title: "" }),
-      });
-    }
+  const handleBooking = async () => {
+  if (!isLoggedIn) {
+    return setModalConfig({
+      isOpen: true,
+      title: "Du måste logga in först",
+      onClose: () => setModalConfig({ isOpen: false, title: "" }),
+    });
+  }
 
-    if (!selectedPayment) {
-      return setModalConfig({
-        isOpen: true,
-        title: "Välj ett betalningsalternativ",
-        onClose: () => setModalConfig({ isOpen: false, title: "" }),
-      });
-    }
+  if (!selectedPayment) {
+    return setModalConfig({
+      isOpen: true,
+      title: "Välj ett betalningsalternativ",
+      onClose: () => setModalConfig({ isOpen: false, title: "" }),
+    });
+  }
+
+  try {
+    // Skicka POST med cookie automatiskt
+    const res = await fetch("/api/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", 
+      body: JSON.stringify({
+        listingId: listing._id,
+        startDate: start,
+        endDate: end,
+        guests,
+        totalPrice,
+        paymentMethod: selectedPayment,
+        paid: true,
+      }),
+    });
+
+    if (res.status === 401) throw new Error("Inte auktoriserad. Logga in igen.");
+    if (!res.ok) throw new Error("Misslyckades med bokning");
 
     setModalConfig({
       isOpen: true,
@@ -101,23 +130,25 @@ export default function BookingOverview() {
         router.push("/");
       },
     });
-  };
+  } catch (err) {
+    console.error(err);
+    setModalConfig({
+      isOpen: true,
+      title: err instanceof Error ? err.message : "Kunde inte slutföra bokningen. Försök igen.",
+      onClose: () => setModalConfig({ isOpen: false, title: "" }),
+    });
+  }
+};
+
+
 
   const saveDates = () => {
-    setBooking({
-      listing: bookedListing,
-      guests,
-      dates: tempDates,
-    });
+    setBooking({ listing: bookedListing, guests, dates: tempDates });
     setEditingDates(false);
   };
 
   const saveGuests = () => {
-    setBooking({
-      listing: bookedListing,
-      guests: tempGuests,
-      dates,
-    });
+    setBooking({ listing: bookedListing, guests: tempGuests, dates });
     setEditingGuests(false);
   };
 
@@ -130,9 +161,7 @@ export default function BookingOverview() {
         <div className={styles["left-column"]}>
           <div className={styles["overview-section"]}>
             <img
-              src={
-                Array.isArray(listing.image) ? listing.image[0] : listing.image
-              }
+              src={Array.isArray(listing.image) ? listing.image[0] : listing.image}
               alt={listing.title}
               className={styles["listing-image"]}
             />
@@ -176,10 +205,7 @@ export default function BookingOverview() {
                     }
                   />
                   <div className={styles["guest-buttons"]}>
-                    <button
-                      className={styles["edit-button"]}
-                      onClick={saveDates}
-                    >
+                    <button className={styles["edit-button"]} onClick={saveDates}>
                       Spara
                     </button>
                     <button
@@ -252,10 +278,7 @@ export default function BookingOverview() {
                     />
                   </div>
                   <div className={styles["guest-buttons"]}>
-                    <button
-                      className={styles["edit-button"]}
-                      onClick={saveGuests}
-                    >
+                    <button className={styles["edit-button"]} onClick={saveGuests}>
                       Spara
                     </button>
                     <button

@@ -31,7 +31,7 @@ export default function Login() {
         return;
       }
 
-      setIsLoggedIn(true); // sätt användaren som inloggad
+      setIsLoggedIn(true); 
       router.push("/");
 
     } catch (error) {

@@ -1,13 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET!;
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Publika routes - listings ska vara tillgängligt för alla
+  // Publika routes
   if (pathname.startsWith("/api/users") || pathname.startsWith("/login") || pathname.startsWith("/api/listings")) {
     return NextResponse.next();
   }
@@ -22,15 +19,8 @@ export function middleware(req: NextRequest) {
     );
   }
 
-  try {
-    jwt.verify(token, JWT_SECRET);
-    return NextResponse.next();
-  } catch {
-    return NextResponse.json(
-      { error: "Invalid or expired token" },
-      { status: 401 }
-    );
-  }
+  // Notera: JWT verifieras nu **i API-route**, inte här
+  return NextResponse.next();
 }
 
 export const config = {
