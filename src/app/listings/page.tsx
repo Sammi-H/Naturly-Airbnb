@@ -3,7 +3,7 @@ import { useEffect, useState, createContext, useContext } from "react";
 import styles from "./ListingCard.module.css";
 import Link from "next/link";
 
-// ---------- FAVORITES CONTEXT ----------
+
 interface FavoritesContextType {
   favorites: string[];
   toggleFavorite: (id: string) => void;
@@ -14,7 +14,7 @@ const FavoritesContext = createContext<FavoritesContextType>({
 });
 export const useFavorites = () => useContext(FavoritesContext);
 
-// ---------- MAIN COMPONENT ----------
+
 interface Listing {
   _id: string;
   title: string;
@@ -40,7 +40,7 @@ export function ListingsDisplay({
     { path: string; destination: string; place: string }[]
   >([]);
 
-  // 🔧 FIX: Filtrering sker här direkt för vald destination
+
   const filteredResults = filteredDestination
     ? results.filter((l) => l.destination === filteredDestination)
     : results;
@@ -64,7 +64,7 @@ export function ListingsDisplay({
     (i) => i.category === "experience"
   );
 
-  // ---------- IMAGE MATCHING ----------
+
   const formatName = (name?: string) =>
     name
       ? name
@@ -128,7 +128,7 @@ export function ListingsDisplay({
   );
 }
 
-// ---------- FAVORITES PROVIDER ----------
+
 export function FavoritesContextProvider({
   children,
 }: {
@@ -159,7 +159,7 @@ export function FavoritesContextProvider({
   );
 }
 
-// ---------- LISTING CARD ----------
+
 export function ListingCard({
   listing,
   imagePath,
@@ -215,7 +215,7 @@ export function ListingCard({
   );
 }
 
-// ---------- EXPERIENCE CARD ----------
+
 export function ExperienceCard({
   listing,
   imagePath,

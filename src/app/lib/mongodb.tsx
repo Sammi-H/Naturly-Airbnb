@@ -4,7 +4,7 @@ const client = new MongoClient(process.env.MONGODB_URI!);
 
 export const db = client.db("naturaly");
 
-// Testa connection
+
 client.connect().then(() => {
   console.log("✅ MongoDB connected to naturaly");
 }).catch(error => {

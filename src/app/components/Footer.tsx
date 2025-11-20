@@ -9,13 +9,13 @@ export default function BottomNav() {
       
 
       <div className={styles.navGrid}>
-        {/* Kolumn 1 */}
+       
         <div>
           <p className={styles.title}>Om oss</p>
           <p>Om oss</p>
         </div>
 
-        {/* Kolumn 2 */}
+       
         <div>
           <p className={styles.title}>Hjälp</p>
           <p>Fäk</p>
@@ -24,7 +24,7 @@ export default function BottomNav() {
           <p>Integritet</p>
         </div>
 
-        {/* Kolumn 3 */}
+      
         <div>
           <p className={styles.title}>Håll kontakten</p>
           <p>Nyhetsbrev</p>

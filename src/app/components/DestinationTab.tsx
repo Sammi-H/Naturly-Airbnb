@@ -19,7 +19,7 @@ export function DestinationTab({ onSelect }: DestinationTabProps) {
         const data = await response.json();
         console.log("Listings från DB:", data);
 
-        // Om datan inte är en array, försök hämta rätt fält
+        
         const listings: Listing[] = Array.isArray(data)
           ? data
           : Array.isArray(data.listings)

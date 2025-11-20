@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import styles from "../listings/ListingCard.module.css";
 import { useFavorites } from "../listings/page";
-import { ListingCard } from "../listings/page"; // exportera ListingCard från page.tsx
+import { ListingCard } from "../listings/page"; 
 
 interface Listing {
   _id: string;

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 export async function POST(req: Request) {
-  console.log("🎯 JWT_SECRET i login:", JWT_SECRET);
+ 
 
   const { email, password } = await req.json();
 
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       { expiresIn: "1h" }
     );
 
-    console.log("🎯 Token genererad:", token);
+ 
 
     return new Response(JSON.stringify({ message: "Login successful" }), {
       status: 200,

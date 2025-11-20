@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   try {
     console.log("🎯 Inne i try-block!");
     
-    // Hämta cookie
+ 
     const cookieHeader = req.headers.get("cookie") || "";
     console.log("🎯 Cookie header:", cookieHeader);
     
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify({ error: "Inte auktoriserad" }), { status: 401 });
     }
 
-    // Verifiera JWT
+   
     let decoded;
     try {
       console.log("🎯 Försöker verifiera JWT...");
@@ -39,14 +39,14 @@ export async function POST(req: Request) {
 
     const userId = decoded.userId;
 
-    // Hämta data från frontend
+
     const { listingId, startDate, endDate, guests, totalPrice, paymentMethod, paid } = await req.json();
     
     if (!listingId || !startDate || !endDate) {
       return new Response(JSON.stringify({ error: "Fälten listingId, startDate och endDate krävs" }), { status: 400 });
     }
 
-    // Spara bokning
+
     const result = await db.collection("bookings").insertOne({
       userId,
       listingId,

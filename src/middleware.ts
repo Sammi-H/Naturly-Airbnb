@@ -4,12 +4,12 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Publika routes
+
   if (pathname.startsWith("/api/users") || pathname.startsWith("/login") || pathname.startsWith("/api/listings")) {
     return NextResponse.next();
   }
 
-  // Auth krävs endast för bokningar
+
   const token = req.cookies.get("token")?.value;
 
   if (!token) {
@@ -19,7 +19,7 @@ export function middleware(req: NextRequest) {
     );
   }
 
-  // Notera: JWT verifieras nu **i API-route**, inte här
+  
   return NextResponse.next();
 }
 

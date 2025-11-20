@@ -20,7 +20,7 @@ export default function BoendePage() {
   useEffect(() => {
     async function fetchListings() {
       try {
-        const res = await fetch("/api/listings"); // din datakälla
+        const res = await fetch("/api/listings"); 
         const data: Listing[] = await res.json();
         const boenden = data.filter((l) => l.category === "accommodation");
         setListings(boenden);

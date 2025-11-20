@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from "react";
 import { FiltersContext } from "@/app/layout";
 
 
-// ----- Listings & Tab -----
+
 interface Listings {
   _id: string;
   name: string;
@@ -14,7 +14,7 @@ interface Listings {
 
 type Tab = "filters" | "var" | "datum" | "vem" | "sök" | null;
 
-// ----- DestinationTab -----
+
 type DestinationTabProps = {
   onSelect: (destination: string) => void;
   destinations: Listings[];
@@ -45,7 +45,7 @@ function DestinationTab({
   );
 }
 
-// ----- DatesTab -----
+
 type DateContentProps = {
   setActivateTab: React.Dispatch<React.SetStateAction<Tab>>;
 };
@@ -81,7 +81,7 @@ function DatesTab({ setActivateTab }: DateContentProps) {
   );
 }
 
-// ----- WhoTab -----
+
 type WhoContentProps = {
   setActivateTab: React.Dispatch<React.SetStateAction<Tab>>;
 };
@@ -157,7 +157,7 @@ function WhoTab({ setActivateTab }: WhoContentProps) {
   );
 }
 
-// ----- FiltersTab -----
+
 type FiltersProps = {
   setActivateTab: React.Dispatch<React.SetStateAction<Tab>>;
   setDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -174,7 +174,7 @@ function FiltersTab({ setActivateTab, setDropdownOpen }: FiltersProps) {
   );
 }
 
-// ----- SearchBar -----
+
 interface SearchBarProps {
   onSelectDestination: (destination: string) => void;
 }
@@ -186,9 +186,9 @@ export default function SearchBar({ onSelectDestination }: SearchBarProps) {
   const [destinationsList, setDestinationsList] = useState<Listings[]>([]);
 
  const handleDestinationChange = (destination: string) => {
-  const newFilters = { ...filters, destination }; // skapa nytt objekt
-  setFilters(newFilters); // uppdatera context
-  console.log("Filters efter destination:", newFilters); // kolla värdet
+  const newFilters = { ...filters, destination }; 
+  setFilters(newFilters); 
+  console.log("Filters efter destination:", newFilters); 
   onSelectDestination(destination);
   setActivateTab("filters");
   setDropdownOpen(false);

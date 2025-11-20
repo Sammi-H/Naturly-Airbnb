@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import styles from "./login.module.css";
-import { useBooking } from "../context/BookingContext"; // importera context
+import { useBooking } from "../context/BookingContext"; 
 
 export default function Login() {
   const [username, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const router = useRouter();
-  const { setIsLoggedIn } = useBooking(); // hämta setIsLoggedIn
+  const { setIsLoggedIn } = useBooking(); 
 
   const handleLogin = async () => {
     try {
